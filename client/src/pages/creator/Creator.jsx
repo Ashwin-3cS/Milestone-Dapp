@@ -82,46 +82,59 @@ function Creator() {
   };
 
   return (
-    <div className="hero-overlay bg-opacity-60">
+    <div className="hero-overlay bg-opacity-60 min-h-screen flex flex-col items-center">
       <NavBar />
-      <div className='flex justify-center items-center flex-col'>
-        <button className="btn btn-outline" onClick={connectWallet}>Connect Metamask</button>
-        <br />
-        <h1 className='mt-2'>{connected ? `CONNECTED TO: ${shortAddress(connected)}` : "Not connected"}</h1>
+      <div className='flex justify-center items-center flex-col mt-8'>
+        <button className="btn btn-outline mb-4" onClick={connectWallet}>Connect Metamask</button>
+        <h1 className='mt-2'>
+          {connected ? (
+            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-lg">
+              CONNECTED TO: <span className="font-bold">{shortAddress(connected)}</span>
+            </span>
+          ) : (
+            "Not connected"
+          )}
+        </h1>
       </div>
       {formVisible && (
-        <form onSubmit={handleSubmit}>
+        <form className="flex justify-center items-center flex-col rounded-lg p-6 border border-gray-300 bg-black shadow-lg mt-8" onSubmit={handleSubmit}>
           {placeNames.map((placeName, index) => (
-            <div key={index}>
-              <label>
+            <div key={index} className="mb-4">
+              <label className='italic text-white'>
                 Place Name {index + 1}:
                 <input
                   type="text"
                   value={placeName}
                   onChange={(e) => handlePlaceNameChange(index, e)}
+                  className="ml-2 p-2 border rounded"
                 />
               </label>
             </div>
           ))}
-          <button type="button" onClick={addPlaceInput}>Add Another Place</button> <br />
-          <label>
-            Description:
-            <textarea
-              value={description}
-              onChange={handleDescriptionChange}
-            />
-          </label>
-          <br />
-          <label>
-            Image URL:
-            <input
-              type="text"
-              value={image}
-              onChange={handleImageChange}
-            />
-          </label>
-          <br />
-          <button type="submit">Create Milestone</button>
+          <button type="button" onClick={addPlaceInput} className="mb-4 p-2 bg-blue-500 text-white rounded italic">Add Another Place</button>
+          <div className="mb-4 w-full">
+            <label className="block text-white text-sm font-bold mb-2 italic">
+              Description:
+              <textarea 
+                value={description}
+                onChange={handleDescriptionChange}
+                className="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                rows="4"
+              />
+            </label>
+          </div>
+          <div className="mb-4 w-full">
+            <label className="block text-white text-sm font-bold mb-2 italic">
+              Image URL:
+              <input
+                type="text"
+                value={image}
+                onChange={handleImageChange}
+                className="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </label>
+          </div>
+          <button className="btn btn-outline p-2 bg-green-500 text-white rounded italic" type="submit">Create Milestone</button>
         </form>
       )}
     </div>
